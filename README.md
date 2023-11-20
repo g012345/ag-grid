@@ -1,3 +1,6 @@
+# hi
+# this is not a large react project that uses ag grid. The project is, one might say, not a large database with the ability to add new data, namely first name, last name and date of birth
+
 # Getting Started with Create React App
 
 This project was bootstrapped with [Create React App](https://github.com/facebook/create-react-app).
