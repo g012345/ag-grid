@@ -49,8 +49,11 @@ function App() {
       <AgGridReact rowData={data} columnDefs={columnDefs} />
       <div>
         <input type="text" placeholder="Имя" />
+        <br></br>
         <input type="text" placeholder="Фамилия" />
+        <br></br>
         <input type="text" placeholder="Дата рождения" />
+        <br></br>
         <button onClick={AddUser}>Добавить</button>
       </div>
     </div>
