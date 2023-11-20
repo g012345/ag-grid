@@ -14,45 +14,50 @@ const DeleteButton = ({ node }) => {
 };
 
 function App() {
-  const initialData = [
-    { id: "1", name: "Anne", lastName: "Baum", dateOfBirth: '10-20-2000' },
-    { id: "2", name: "oleg", lastName: "chopa", dateOfBirth: '10-22-1900' },
-    { id: "3", name: "egor", lastName: "chin", dateOfBirth: '11-12-1999' },
+  const data = [
+    { id: "1", name: "Anne", lastName: "Baum", dateOfBirth: new Date('10-20-2000') }
   ];
 
-  const [data, setData] = useState(initialData);
+  const [dataChangeable, setDataChangeable] = useState(data);
 
   const columnDefs = [
-    { field: "Имя", valueGetter: (params) => `${params.data.name} ${params.data.lastName}`, filter: true },
+    { field: "name",headerName: "Имя ", valueGetter: (params) => `${params.data.name} ${params.data.lastName}`, filter: true },
     { field: "dateOfBirth", headerName: "Дата рождения" },
-    { field: "удалить", cellRenderer: DeleteButton }
+    { field: "delit",headerName: "Удалить", cellRenderer: DeleteButton }
   ];
 
   const addUser = (user) => {
-    setData([...data, user]);
+    setDataChangeable([...dataChangeable, user]);
   };
 
   const AddUser = () => {
     const nameInput = document.querySelector('input[placeholder="Имя"]');
     const lastNameInput = document.querySelector('input[placeholder="Фамилия"]');
-    const dobInput = document.querySelector('input[placeholder="Дата рождения"]');
+    const dayofbirthInput = document.querySelector('input[placeholder="Дата рождения"]');
 
     const name = nameInput.value;
     const lastName = lastNameInput.value;
-    const dateOfBirth = dobInput.value;
-
-    addUser({ id: String(data.length + 1), name, lastName, dateOfBirth });
+    const dateOfBirth = new Date(dayofbirthInput.value);
+    
+    if(nameInput.value !== "" && lastNameInput.value !== "" && dayofbirthInput.value !== ""){
+      addUser({ id: String(dataChangeable.length + 1), name, lastName, dateOfBirth });
+      nameInput.value = ""
+      lastNameInput.value = ""
+      dayofbirthInput.value = ""
+    }else{
+      alert("заполни все поля!")
+    }
   };
 
   return (
     <div id="myGrid" className="ag-theme-alpine" style={{ height: '500px' }}>
-      <AgGridReact rowData={data} columnDefs={columnDefs} />
+      <AgGridReact rowData={dataChangeable} columnDefs={columnDefs} />
       <div>
         <input type="text" placeholder="Имя" />
         <br></br>
         <input type="text" placeholder="Фамилия" />
         <br></br>
-        <input type="text" placeholder="Дата рождения" />
+        <input style={{ width: "100px" }} type="date" placeholder="Дата рождения" />
         <br></br>
         <button onClick={AddUser}>Добавить</button>
       </div>
