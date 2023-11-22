@@ -20,9 +20,19 @@ function App() {
 
   const [dataChangeable, setDataChangeable] = useState(data);
 
+  const dateFormatter = new Intl.DateTimeFormat('ru', {
+    day: 'numeric',
+    month: 'long',
+    year: 'numeric',
+  });
+
+  function formatDate(date) {
+    return dateFormatter.format(date);
+  }
+
   const columnDefs = [
     { field: "name",headerName: "Имя ", valueGetter: (params) => `${params.data.name} ${params.data.lastName}`, filter: true },
-    { field: "dateOfBirth", headerName: "Дата рождения" },
+    { field: "dateOfBirth", headerName: "Дата рождения", valueGetter: (params) => formatDate(params.data.dateOfBirth) },
     { field: "delit",headerName: "Удалить", cellRenderer: DeleteButton }
   ];
 
