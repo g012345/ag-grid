@@ -31,16 +31,16 @@ function App() {
   }
 
   const columnDefs = [
-    { field: "name",headerName: "Имя ", valueGetter: (params) => `${params.data.name} ${params.data.lastName}`, filter: true },
+    { field: "name",headerName: "Имя ", valueGetter: (params) => `${params.data.name} ${params.data.lastName}`, sortable: true },
     { field: "dateOfBirth", headerName: "Дата рождения", valueGetter: (params) => formatDate(params.data.dateOfBirth) },
     { field: "delit",headerName: "Удалить", cellRenderer: DeleteButton }
   ];
 
-  const addUser = (user) => {
-    setDataChangeable([...dataChangeable, user]);
+  const SetUser = (user) => {
+    setDataChangeable(prev => ([...prev, user]));
   };
 
-  const AddUser = () => {
+  const addNewUser = () => {
     const nameInput = document.querySelector('input[placeholder="Имя"]');
     const lastNameInput = document.querySelector('input[placeholder="Фамилия"]');
     const dayofbirthInput = document.querySelector('input[placeholder="Дата рождения"]');
@@ -50,7 +50,7 @@ function App() {
     const dateOfBirth = new Date(dayofbirthInput.value);
     
     if(nameInput.value !== "" && lastNameInput.value !== "" && dayofbirthInput.value !== ""){
-      addUser({ id: String(dataChangeable.length + 1), name, lastName, dateOfBirth });
+      SetUser({ id: String(dataChangeable.length + 1), name, lastName, dateOfBirth });
       nameInput.value = ""
       lastNameInput.value = ""
       dayofbirthInput.value = ""
@@ -69,7 +69,7 @@ function App() {
         <br></br>
         <input style={{ width: "100px" }} type="date" placeholder="Дата рождения" />
         <br></br>
-        <button onClick={AddUser}>Добавить</button>
+        <button onClick={addNewUser}>Добавить</button>
       </div>
     </div>
   );
