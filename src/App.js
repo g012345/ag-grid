@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
-import { AgGridReact } from 'ag-grid-react';
-import 'ag-grid-community/styles/ag-grid.css';
-import 'ag-grid-community/styles/ag-theme-alpine.css';
-import ControlledInputs from './component/ControlledInput';
-import SimpleInput from './component/SimpleInput';
+import React, { useState } from "react";
+import { AgGridReact } from "ag-grid-react";
+import "ag-grid-community/styles/ag-grid.css";
+import "ag-grid-community/styles/ag-theme-alpine.css";
+import ControlledInputs from "./component/ControlledInput";
+import SimpleInput from "./component/SimpleInput";
 
 const DeleteButton = ({ node }) => {
   const handleDelete = () => {
@@ -17,7 +17,7 @@ const DeleteButton = ({ node }) => {
 
 function App() {
   const data = [
-    { id: "1", name: "Egor", lastName: "Kuzmin", dateOfBirth: new Date('10-20-2000')},
+    { id: "1", name: "Egor", lastName: "Kuzmin", dateOfBirth: new Date("10-20-2000")},
   ];
   const [dataChangeable, setDataChangeable] = useState(data);
 
@@ -30,10 +30,10 @@ function App() {
     return lastNameA > lastNameB ? 1 : -1;
   };
 
-  const dateFormatter = new Intl.DateTimeFormat('ru', {
-    day: 'numeric',
-    month: 'long',
-    year: 'numeric',
+  const dateFormatter = new Intl.DateTimeFormat("ru", {
+    day: "numeric",
+    month: "long",
+    year: "numeric",
   });
 
   function formatDate(date) {
@@ -61,7 +61,7 @@ function App() {
   };
 
   return (
-    <div id="myGrid" className="ag-theme-alpine" style={{ height: '500px' }}>
+    <div id="myGrid" className="ag-theme-alpine" style={{ height: "500px" }}>
       <AgGridReact rowData={dataChangeable} columnDefs={columnDefs} />
       <SimpleInput setUser={setUser} dataChangeable={dataChangeable} />
       <ControlledInputs setUser={setUser} dataChangeable={dataChangeable} />

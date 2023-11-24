@@ -1,9 +1,9 @@
-import React, { useState } from 'react';
+import React, { useState } from "react";
 
 const ControlledInputs = ({ setUser, dataChangeable }) => {
-  const [firstname, setFirstname] = useState('');
-  const [lastNameInput, setLastname] = useState('');
-  const [date, setDate] = useState('');
+  const [firstname, setFirstname] = useState("");
+  const [lastNameInput, setLastname] = useState("");
+  const [date, setDate] = useState("");
 
   const handleAddUserControlledInput = (e) => {
     e.preventDefault();
@@ -12,13 +12,13 @@ const ControlledInputs = ({ setUser, dataChangeable }) => {
     const lastName = lastNameInput;
     const dateOfBirth = new Date(date);
 
-    if (firstname !== '' && lastNameInput !== '' && date !== '') {
+    if (firstname !== "" && lastNameInput !== "" && date !== "") {
       setUser({ id: String(dataChangeable.length + 1), name, lastName, dateOfBirth });
-      setFirstname('');
-      setLastname('');
-      setDate('');
+      setFirstname("");
+      setLastname("");
+      setDate("");
     } else {
-      alert('Заполните все поля!');
+      alert("Заполните все поля!");
     }
   };
 
@@ -48,7 +48,7 @@ const ControlledInputs = ({ setUser, dataChangeable }) => {
         <br />
         <input
           type="date"
-          style={{ width: '100px' }}
+          style={{ width: "100px" }}
           required
           value={date}
           onChange={(e) => setDate(e.target.value)}

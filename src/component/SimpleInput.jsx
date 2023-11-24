@@ -1,4 +1,4 @@
-import React from 'react';
+import React from "react";
 
 const SimpleInput = ({ setUser, dataChangeable }) => {
   const handleAddUserSimpleInput = () => {
@@ -10,13 +10,13 @@ const SimpleInput = ({ setUser, dataChangeable }) => {
     const lastName = lastNameInput.value;
     const dateOfBirth = new Date(dayOfBirthInput.value);
 
-    if (name !== '' && lastName !== '' && dayOfBirthInput.value !== '') {
+    if (name !== "" && lastName !== "" && dayOfBirthInput.value !== "") {
       setUser({ id: String(dataChangeable.length + 1), name, lastName, dateOfBirth });
-      nameInput.value = '';
-      lastNameInput.value = '';
-      dayOfBirthInput.value = '';
+      nameInput.value = "";
+      lastNameInput.value = "";
+      dayOfBirthInput.value = "";
     } else {
-      alert('Заполните все поля!');
+      alert("Заполните все поля!");
     }
   };
 
@@ -27,7 +27,7 @@ const SimpleInput = ({ setUser, dataChangeable }) => {
       <br />
       <input id="lastname" type="text" placeholder="Фамилия" />
       <br />
-      <input id="DateofBirth" style={{ width: '100px' }} type="date" placeholder="Дата рождения" />
+      <input id="DateofBirth" style={{ width: "100px" }} type="date" placeholder="Дата рождения" />
       <br />
       <button onClick={handleAddUserSimpleInput}>Добавить</button>
     </div>
