@@ -30,7 +30,6 @@ const App = () => {
   };
 
   const onDelete = useCallback((id) => {
-    // Handle delete logic here
     console.log("Deleting item with id:", id);
   }, []);
 

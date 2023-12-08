@@ -1,34 +1,89 @@
-import React from "react";
+import React, { useRef, useState } from "react";
 
 const SimpleInput = ({ setUser, dataChangeable }) => {
+  const [inputs, setInputs] = useState({
+    name: "",
+    lastName: "",
+    dateOfBirth: "",
+  });
+  const [error, setError] = useState("");
+
+  const nameInputRef = useRef(null);
+  const lastNameInputRef = useRef(null);
+  const dateOfBirthInputRef = useRef(null);
+
   const handleAddUserSimpleInput = () => {
-    const nameInput = document.querySelector('input[id="firstname"]');
-    const lastNameInput = document.querySelector('input[id="lastname"]');
-    const dayOfBirthInput = document.querySelector('input[id="DateofBirth"]');
+    const { name, lastName, dateOfBirth } = inputs;
 
-    const name = nameInput.value;
-    const lastName = lastNameInput.value;
-    const dateOfBirth = new Date(dayOfBirthInput.value);
+    if (name.trim() !== "" && lastName.trim() !== "" && dateOfBirth.trim() !== "") {
+      if (!isValidDate(dateOfBirth)) {
+        setError("Неправильный формат даты!");
+        return;
+      }
 
-    if (name !== "" && lastName !== "" && dayOfBirthInput.value !== "") {
-      setUser({ id: String(dataChangeable.length + 1), name, lastName, dateOfBirth });
-      nameInput.value = "";
-      lastNameInput.value = "";
-      dayOfBirthInput.value = "";
+      setUser({
+        id: String(dataChangeable.length + 1),
+        name,
+        lastName,
+        dateOfBirth: new Date(dateOfBirth),
+      });
+
+      setInputs({
+        name: "",
+        lastName: "",
+        dateOfBirth: "",
+      });
+
+      setError("");
     } else {
-      alert("Заполните все поля!");
+      setError("Заполните все поля!");
     }
+  };
+
+  const handleChange = (e) => {
+    setInputs({
+      ...inputs,
+      [e.target.id]: e.target.value,
+    });
+  };
+
+  const isValidDate = (dateString) => {
+    const regex = /^\d{4}-\d{2}-\d{2}$/;
+    return regex.test(dateString);
   };
 
   return (
     <div>
       <h1>Реализация через простой инпут</h1>
-      <input id="firstname" type="text" placeholder="Имя" />
+      <input
+        ref={nameInputRef}
+        id="name"
+        type="text"
+        placeholder="Имя"
+        value={inputs.name}
+        onChange={handleChange}
+      />
       <br />
-      <input id="lastname" type="text" placeholder="Фамилия" />
+      <input
+        ref={lastNameInputRef}
+        id="lastName"
+        type="text"
+        placeholder="Фамилия"
+        value={inputs.lastName}
+        onChange={handleChange}
+      />
       <br />
-      <input id="DateofBirth" style={{ width: "100px" }} type="date" placeholder="Дата рождения" />
+      <input
+        ref={dateOfBirthInputRef}
+        id="dateOfBirth"
+        style={{ width: "100px" }}
+        type="date"
+        placeholder="Дата рождения"
+        value={inputs.dateOfBirth}
+        onChange={handleChange}
+      />
       <br />
+      {error && <p style={{ color: "red" }}>{error}</p>}
       <button onClick={handleAddUserSimpleInput}>Добавить</button>
     </div>
   );
