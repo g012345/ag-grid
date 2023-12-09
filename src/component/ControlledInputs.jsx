@@ -12,14 +12,15 @@ const ControlledInputs = ({ setUser, dataChangeable }) => {
     const lastName = lastNameInput;
     const dateOfBirth = new Date(date);
 
-    if (firstname !== '' && lastNameInput !== '' && date !== '') {
-      setUser({ id: String(dataChangeable.length + 1), name, lastName, dateOfBirth });
-      setFirstname('');
-      setLastname('');
-      setDate('');
-    } else {
-      alert('Заполните все поля!');
+    if (!firstname || !lastNameInput || !date || isNaN(dateOfBirth.getTime())) {
+      alert('Заполните все поля корректно!');
+      return;
     }
+
+    setUser({ id: String(dataChangeable.length + 1), name, lastName, dateOfBirth });
+    setFirstname('');
+    setLastname('');
+    setDate('');
   };
 
   return (
