@@ -2,50 +2,49 @@ import React, { useState } from "react";
 
 const ControlledInputs = ({ setUser, dataChangeable }) => {
   const [formData, setFormData] = useState({
-    firstname: "",
-    lastNameInput: "",
-    date: ""
+    firstName: "",
+    lastName: "",
+    birthDate: ""
   });
-  
+
   const [formErrors, setFormErrors] = useState({
-    firstname: false,
-    lastNameInput: false,
-    date: false
+    firstName: "",
+    lastName: "",
+    birthDate: ""
   });
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
-    setFormData({...formData,[name]: value});
-    setFormErrors({...formErrors, [name]: false});
+    setFormData({ ...formData, [name]: value });
+    setFormErrors({ ...formErrors, [name]: "" });
+  };
+
+  const validateForm = () => {
+    const { firstName, lastName, birthDate } = formData;
+    const errors = {
+      firstName: firstName.trim() === "" ? "Заполните поле 'Имя'" : "",
+      lastName: lastName.trim() === "" ? "Заполните поле 'Фамилия'" : "",
+      birthDate: birthDate === "" ? "Заполните или выберите дату рождения" : ""
+    };
+    setFormErrors(errors);
+    return Object.values(errors).every(error => error === "");
   };
 
   const handleAddUserControlledInput = (event) => {
     event.preventDefault();
-    const { firstname, lastNameInput, date } = formData;
-    const dateOfBirth = new Date(date);
-
-    if (firstname.trim() !== "" && lastNameInput.trim() !== "" && date !== "") {
+    if (validateForm()) {
+      const { firstName, lastName, birthDate } = formData;
+      const dateOfBirth = new Date(birthDate);
       setUser({
         id: String(dataChangeable.length + 1),
-        name: firstname,
-        lastName: lastNameInput,
-        dateOfBirth,
+        name: firstName,
+        lastName,
+        dateOfBirth
       });
       setFormData({
-        firstname: "",
-        lastNameInput: "",
-        date: "",
-      });
-      setFormErrors({
-        firstname: false,
-        lastNameInput: false,
-        date: false
-      });
-    } else {
-      setFormErrors({
-        firstname: firstname.trim() === "",
-        lastNameInput: lastNameInput.trim() === "",
-        date: date === ""
+        firstName: "",
+        lastName: "",
+        birthDate: ""
       });
     }
   };
@@ -54,41 +53,41 @@ const ControlledInputs = ({ setUser, dataChangeable }) => {
     <div>
       <h1>Реализация через controlled inputs</h1>
       <form onSubmit={handleAddUserControlledInput} noValidate>
-        <label htmlFor="firstname">Имя</label>
+        <label htmlFor="firstName">Имя</label>
         <br />
         <input
           type="text"
-          name="firstname"
+          name="firstName"
           required
-          value={formData.firstname}
+          value={formData.firstName}
           onChange={handleInputChange}
         />
-        {formErrors.firstname && <span style={{ color: "red" }}>Заполните поле "Имя"</span>}
+        {formErrors.firstName && <span style={{ color: "red" }}>{formErrors.firstName}</span>}
         <br />
-        <label htmlFor="lastNameInput">Фамилия</label>
+        <label htmlFor="lastName">Фамилия</label>
         <br />
         <input
           type="text"
-          name="lastNameInput"
+          name="lastName"
           required
-          value={formData.lastNameInput}
+          value={formData.lastName}
           onChange={handleInputChange}
         />
-        {formErrors.lastNameInput && <span style={{ color: "red" }}>Заполните поле "Фамилия"</span>}
+        {formErrors.lastName && <span style={{ color: "red" }}>{formErrors.lastName}</span>}
         <br />
-        <label htmlFor="date">Дата рождения</label>
+        <label htmlFor="birthDate">Дата рождения</label>
         <br />
         <input
           type="date"
-          name="date"
+          name="birthDate"
           style={{ width: "100px" }}
           required
-          value={formData.date}
+          value={formData.birthDate}
           onChange={handleInputChange}
         />
-        {formErrors.date && <span style={{ color: "red" }}>Заполните или выберите дату рождения</span>}
+        {formErrors.birthDate && <span style={{ color: "red" }}>{formErrors.birthDate}</span>}
         <br />
-        <button  type="submit">Add User</button>
+        <button type="submit">Add User</button>
       </form>
     </div>
   );
