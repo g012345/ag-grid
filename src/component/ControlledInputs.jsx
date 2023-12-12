@@ -1,15 +1,25 @@
 import React, { useState } from 'react';
 
 const ControlledInputs = ({ setUser, dataChangeable }) => {
-  const [firstname, setFirstname] = useState('');
-  const [lastNameInput, setLastname] = useState('');
-  const [date, setDate] = useState('');
+  const [user, setUserState] = useState({
+    firstname: '',
+    lastNameInput: '',
+    date: '',
+  });
+
+  const { firstname, lastNameInput, date } = user;
+
+  const handleInputChange = (e) => {
+    const { name, value } = e.target;
+    setUserState({
+      ...user,
+      [name]: value,
+    });
+  };
 
   const addNewUserControlledInput = (e) => {
     e.preventDefault();
 
-    const name = firstname;
-    const lastName = lastNameInput;
     const dateOfBirth = new Date(date);
 
     if (!firstname || !lastNameInput || !date || isNaN(dateOfBirth.getTime())) {
@@ -17,10 +27,15 @@ const ControlledInputs = ({ setUser, dataChangeable }) => {
       return;
     }
 
-    setUser({ id: String(dataChangeable.length + 1), name, lastName, dateOfBirth });
-    setFirstname('');
-    setLastname('');
-    setDate('');
+    const newUser = {
+      id: String(dataChangeable.length + 1),
+      name: firstname,
+      lastName: lastNameInput,
+      dateOfBirth,
+    };
+
+    setUser(newUser);
+    setUserState({ firstname: '', lastNameInput: '', date: '' });
   };
 
   return (
@@ -32,8 +47,9 @@ const ControlledInputs = ({ setUser, dataChangeable }) => {
         <input
           type="text"
           required
+          name="firstname"
           value={firstname}
-          onChange={(e) => setFirstname(e.target.value)}
+          onChange={handleInputChange}
         />
         <br />
         <label>Last name:</label>
@@ -41,8 +57,9 @@ const ControlledInputs = ({ setUser, dataChangeable }) => {
         <input
           type="text"
           required
+          name="lastNameInput"
           value={lastNameInput}
-          onChange={(e) => setLastname(e.target.value)}
+          onChange={handleInputChange}
         />
         <br />
         <label>Date of birth:</label>
@@ -51,8 +68,9 @@ const ControlledInputs = ({ setUser, dataChangeable }) => {
           type="date"
           style={{ width: '100px' }}
           required
+          name="date"
           value={date}
-          onChange={(e) => setDate(e.target.value)}
+          onChange={handleInputChange}
         />
         <br />
         <button onClick={addNewUserControlledInput}>Add User</button>
