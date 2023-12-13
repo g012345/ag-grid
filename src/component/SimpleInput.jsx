@@ -12,6 +12,19 @@ const SimpleInput = ({ setUser, dataChangeable }) => {
   const lastNameInputRef = useRef(null);
   const dateOfBirthInputRef = useRef(null);
 
+  const handleChange = (e) => {
+    const { id, value } = e.target;
+    setInputs((prevInputs) => ({
+      ...prevInputs,
+      [id]: value,
+    }));
+  };
+
+  const isValidDate = (dateString) => {
+    const regex = /^\d{4}-\d{2}-\d{2}$/;
+    return regex.test(dateString);
+  };
+
   const handleAddUserSimpleInput = () => {
     const { name, lastName, dateOfBirth } = inputs;
 
@@ -38,18 +51,6 @@ const SimpleInput = ({ setUser, dataChangeable }) => {
     } else {
       setError("Заполните все поля!");
     }
-  };
-
-  const handleChange = (e) => {
-    setInputs({
-      ...inputs,
-      [e.target.id]: e.target.value,
-    });
-  };
-
-  const isValidDate = (dateString) => {
-    const regex = /^\d{4}-\d{2}-\d{2}$/;
-    return regex.test(dateString);
   };
 
   return (
