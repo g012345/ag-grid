@@ -30,6 +30,7 @@ const App = () => {
   };
 
   const onDelete = useCallback((id) => {
+    setDataChangeable((prevData) => prevData.filter((item) => item.id !== id));
     console.log("Deleting item with id:", id);
   }, []);
 
