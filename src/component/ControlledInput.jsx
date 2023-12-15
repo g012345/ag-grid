@@ -1,17 +1,20 @@
 import React, { useState } from "react";
 
 const ControlledInputs = ({ setUser, dataChangeable }) => {
-  const [formData, setFormData] = useState({
+  const initialState = {
     firstName: "",
     lastName: "",
     birthDate: ""
-  });
+  };
 
-  const [formErrors, setFormErrors] = useState({
+  const initialErrors = {
     firstName: "",
     lastName: "",
     birthDate: ""
-  });
+  };
+
+  const [formData, setFormData] = useState(initialState);
+  const [formErrors, setFormErrors] = useState(initialErrors);
 
   const handleInputChange = (event) => {
     const { name, value } = event.target;
@@ -41,12 +44,14 @@ const ControlledInputs = ({ setUser, dataChangeable }) => {
         lastName,
         dateOfBirth
       });
-      setFormData({
-        firstName: "",
-        lastName: "",
-        birthDate: ""
-      });
+      setFormData(initialState);
     }
+  };
+
+  const renderError = (fieldName) => {
+    return formErrors[fieldName] && (
+      <span style={{ color: "red" }}>{formErrors[fieldName]}</span>
+    );
   };
 
   return (
@@ -62,7 +67,7 @@ const ControlledInputs = ({ setUser, dataChangeable }) => {
           value={formData.firstName}
           onChange={handleInputChange}
         />
-        {formErrors.firstName && <span style={{ color: "red" }}>{formErrors.firstName}</span>}
+        {renderError('firstName')}
         <br />
         <label htmlFor="lastName">Фамилия</label>
         <br />
@@ -73,7 +78,7 @@ const ControlledInputs = ({ setUser, dataChangeable }) => {
           value={formData.lastName}
           onChange={handleInputChange}
         />
-        {formErrors.lastName && <span style={{ color: "red" }}>{formErrors.lastName}</span>}
+        {renderError('lastName')}
         <br />
         <label htmlFor="birthDate">Дата рождения</label>
         <br />
@@ -85,7 +90,7 @@ const ControlledInputs = ({ setUser, dataChangeable }) => {
           value={formData.birthDate}
           onChange={handleInputChange}
         />
-        {formErrors.birthDate && <span style={{ color: "red" }}>{formErrors.birthDate}</span>}
+        {renderError('birthDate')}
         <br />
         <button type="submit">Add User</button>
       </form>
